@@ -4,5 +4,5 @@ import 'palette.dart';
 ThemeData kAppTheme = ThemeData.dark().copyWith(
       visualDensity: VisualDensity.adaptivePlatformDensity,
       scaffoldBackgroundColor: Palette.black,
-      accentColor: Palette.lightGreen,
+      accentColor: Palette.darkGreen,
 );

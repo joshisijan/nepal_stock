@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/screens.dart';
+import 'config/theme.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,10 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Nepal Stock App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: kAppTheme,
       home: HomeScreen(),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../tabs/tabs.dart';
+import '../config/palette.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex: _currentIndex,
             type: BottomNavigationBarType.fixed,
             selectedFontSize: Theme.of(context).textTheme.caption.fontSize,
+            backgroundColor: Palette.lightBlack,
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),

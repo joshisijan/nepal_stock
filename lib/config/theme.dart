@@ -5,4 +5,5 @@ ThemeData kAppTheme = ThemeData.dark().copyWith(
       visualDensity: VisualDensity.adaptivePlatformDensity,
       scaffoldBackgroundColor: Palette.black,
       accentColor: Palette.darkGreen,
+      textSelectionHandleColor: Palette.lightGreen,
 );

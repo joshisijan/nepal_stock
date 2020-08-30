@@ -73,6 +73,7 @@ class DoubledListItem extends StatelessWidget{
                 height: 50.0,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),

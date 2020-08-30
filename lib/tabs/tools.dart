@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 import '../config/palette.dart';
+import '../screens/screens.dart';
 
 class ToolsTab extends StatelessWidget {
   @override
@@ -25,16 +27,33 @@ class ToolsTab extends StatelessWidget {
               icon: Icons.monetization_on,
               iconBackgroundColor: Colors.green,
               iconColor: Palette.white,
-              title: 'Profit Calculator',
+              title: 'Buy Calculator',
               onPressed: (){
-
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context){
+                    return BuyCalculator();
+                  }
+                ));
               },
             ),
             DoubledListItem(
-              icon: Icons.attach_money,
+              icon: Icons.monetization_on,
+              iconBackgroundColor: Colors.red,
+              iconColor: Palette.white,
+              title: 'Sell (profit/loss)\nCalculator',
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context){
+                      return SellCalculator();
+                    }
+                ));
+              },
+            ),
+            DoubledListItem(
+              icon: Icons.note,
               iconBackgroundColor: Colors.blue,
               iconColor: Palette.white,
-              title: 'WAAC Calculator',
+              title: 'My Notes',
               onPressed: (){
 
               },

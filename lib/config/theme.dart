@@ -6,4 +6,5 @@ ThemeData kAppTheme = ThemeData.dark().copyWith(
       scaffoldBackgroundColor: Palette.black,
       accentColor: Palette.darkGreen,
       textSelectionHandleColor: Palette.lightGreen,
+      cursorColor: Palette.darkGreen,
 );

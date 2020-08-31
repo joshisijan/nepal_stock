@@ -33,13 +33,11 @@ class _BuyCalculatorState extends State<BuyCalculator> {
 
   @override
   void dispose() {
-
     _numberController.dispose();
     _priceController.dispose();
     _numberNode.dispose();
     _priceNode.dispose();
     _scrollController.dispose();
-
     super.dispose();
   }
 

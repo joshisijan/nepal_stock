@@ -32,13 +32,16 @@ class DoubledListItem extends StatelessWidget{
   final Color iconColor;
   final Color iconBackgroundColor;
   final Function onPressed;
+  final bool isCentered, noSymbol;
 
   DoubledListItem({
     @required this.title,
     @required  this.icon,
     @required this.iconBackgroundColor,
     @required this.iconColor,
-    @required this.onPressed
+    @required this.onPressed,
+    this.isCentered = false,
+    this.noSymbol = false
   });
 
   @override
@@ -56,7 +59,7 @@ class DoubledListItem extends StatelessWidget{
         onPressed: this.onPressed,
         child: Row(
           children: [
-            Container(
+            !noSymbol ? Container(
               width: 50.0,
               height: 50.0,
               decoration: BoxDecoration(
@@ -67,13 +70,13 @@ class DoubledListItem extends StatelessWidget{
                 color: this.iconBackgroundColor.withAlpha(200),
               ),
               child: Icon(this.icon,color: this.iconColor,),
-            ),
+            ) : SizedBox.shrink(),
             Expanded(
               child: Container(
                 height: 50.0,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: !isCentered ? CrossAxisAlignment.start : CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),

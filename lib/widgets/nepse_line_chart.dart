@@ -92,22 +92,24 @@ class _NepseLineChartState extends State<NepseLineChart> {
                       Wrap(
                         crossAxisAlignment: WrapCrossAlignment.end,
                         children: [
-                          Icon(
-                            symbolValue['change'] > 0
-                                ? Icons.keyboard_arrow_up
-                                : Icons.keyboard_arrow_down,
-                            size: 15.0,
-                            color: symbolValue['change'] > 0
-                                ? kColorGreen
-                                : kColorRed.withAlpha(150),
-                          ),
+                          symbolValue['change'] > 0
+                              ? Icon(
+                                  symbolValue['change'] == 0
+                                      ? Icons.keyboard_arrow_up
+                                      : Icons.keyboard_arrow_down,
+                                  size: 15.0,
+                                  color: symbolValue['change'] < 0
+                                      ? kColorRed.withAlpha(150)
+                                      : kColorGreen,
+                                )
+                              : SizedBox.shrink(),
                           Text(
                             symbolValue['change'].toString().toCurrencyString(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: symbolValue['change'] > 0
-                                  ? kColorGreen
-                                  : kColorRed.withAlpha(150),
+                              color: symbolValue['change'] < 0
+                                  ? kColorRed.withAlpha(150)
+                                  : kColorGreen,
                             ),
                           ),
                         ],
@@ -120,9 +122,9 @@ class _NepseLineChartState extends State<NepseLineChart> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 10.7,
-                          color: symbolValue['change'] > 0
-                              ? kColorGreen
-                              : kColorRed.withAlpha(150),
+                          color: symbolValue['change'] < 0
+                              ? kColorRed.withAlpha(150)
+                              : kColorGreen,
                         ),
                       )
                     ],
@@ -201,8 +203,7 @@ class _NepseLineChartState extends State<NepseLineChart> {
           symbolValue = totalIndex[i];
         }
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   getIndex() async {
@@ -225,8 +226,7 @@ class _NepseLineChartState extends State<NepseLineChart> {
           dropDownMenuListIndex = temp;
         });
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   getTimeValue(id) async {
@@ -236,17 +236,19 @@ class _NepseLineChartState extends State<NepseLineChart> {
       var jsonData = jsonDecode(timeValue.body);
       max = -100000000.0;
       min = 100000000.0;
-      for (int i = 0; i < jsonData['time'].length; i++) {
-        if (double.parse(jsonData['value'][i].toString()) < min) {
-          min = double.parse(jsonData['value'][i].toString());
+      for (int i = 0; i < jsonData.length; i++) {
+        if (double.parse(jsonData[i][1].toString()) < min) {
+          min = double.parse(jsonData[i][1].toString());
         }
-        if (double.parse(jsonData['value'][i].toString()) > max) {
-          max = double.parse(jsonData['value'][i].toString());
+        if (double.parse(jsonData[i][1].toString()) > max) {
+          max = double.parse(jsonData[i][1].toString());
         }
         temp.add(TimeValueModel(
-            DateTime.fromMillisecondsSinceEpoch(jsonData['time'][i] * 1000),
-            double.parse(jsonData['value'][i].toString())));
+            DateTime.fromMillisecondsSinceEpoch(jsonData[i][0] * 1000),
+            double.parse(jsonData[i][1].toString())));
       }
+      if(min == 100000000.0) min = 0;
+      if(max == -100000000.0) max = 2000;
       if (data != temp) {
         setState(() {
           data = temp;
@@ -258,7 +260,7 @@ class _NepseLineChartState extends State<NepseLineChart> {
         });
       }
     } catch (e) {
-
+      
     }
   }
 }

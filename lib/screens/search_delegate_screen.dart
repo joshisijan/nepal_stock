@@ -42,6 +42,8 @@ class SearchDelegateScreen extends SearchDelegate {
       itemCount: companies.length,
       itemBuilder: (item, index) {
         return ListTile(
+          dense: true,
+          isThreeLine: true,
           title: Text(companies[index]['symbol'].toString()),
           subtitle: Text(companies[index]['securityName'].toString()),
           trailing: IconButton(
@@ -72,10 +74,17 @@ class SearchDelegateScreen extends SearchDelegate {
           element['symbol'].toString().toLowerCase().contains(query) ||
           element['securityName'].toString().toLowerCase().contains(query);
     }).toList();
+    if(result.length <= 0){
+      return Center(
+        child: Text('Nothing found. Change your search query.'),
+      );
+    }
     return ListView.builder(
       itemCount: result.length,
       itemBuilder: (item, index) {
         return ListTile(
+          dense: true,
+          isThreeLine: true,
           title: Text(result[index]['symbol'].toString()),
           subtitle: Text(result[index]['securityName'].toString()),
           trailing: IconButton(
@@ -85,8 +94,8 @@ class SearchDelegateScreen extends SearchDelegate {
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => SecurityDetailScreen(
-                      id: companies[index]['id'].toString(),
-                      symbol: companies[index]['symbol'].toString(),
+                      id: result[index]['id'].toString(),
+                      symbol: result[index]['symbol'].toString(),
                     )));
           },
         );

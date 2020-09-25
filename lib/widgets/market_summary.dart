@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:nepal_stock/api/api_url.dart';
 import 'package:nepal_stock/styles/colors.dart';
+import 'package:nepal_stock/widgets/wrap_value.dart';
 
 class MarketSummary extends StatefulWidget {
   @override
@@ -74,29 +75,59 @@ class _MarketSummaryState extends State<MarketSummary> {
             child: Wrap(
               alignment: WrapAlignment.spaceBetween,
               children: [
-                MarketColumn(
+                WrapValue(
                   title: 'Total Turnover (Rs)',
-                  value: totalTurnover,
+                  moreSpacing: 10.0,
+                  isBold: true,
                 ),
-                MarketColumn(
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalTurnover.toString().toCurrencyString(leadingSymbol: 'Rs. '),
+                ),
+                WrapValue(
                   title: 'Total Traded Shares',
-                  value: totalShares,
+                  moreSpacing: 10.0,
+                  isBold: true,
                 ),
-                MarketColumn(
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalShares.toString().toCurrencyString(mantissaLength: 0),
+                ),
+                WrapValue(
                   title: 'Total Transactions',
-                  value: totalTransactions,
+                  moreSpacing: 10.0,
+                  isBold: true,
                 ),
-                MarketColumn(
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalTransactions.toString().toCurrencyString(mantissaLength: 0),
+                ),
+                WrapValue(
                   title: 'Total Scrips Traded',
-                  value: totalScrips,
+                  moreSpacing: 10.0,
+                  isBold: true,
                 ),
-                MarketColumn(
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalScrips.toString().toCurrencyString(mantissaLength: 0),
+                ),
+                WrapValue(
                   title: 'Total Market Capitalization (Rs)',
-                  value: totalCapital,
+                  moreSpacing: 10.0,
+                  isBold: true,
                 ),
-                MarketColumn(
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalCapital.toString().toCurrencyString(leadingSymbol: 'Rs. '),
+                ),
+                WrapValue(
                   title: 'Total Float Market Capitalization (Rs)',
-                  value: totalFloatCapital,
+                  moreSpacing: 10.0,
+                  isBold: true,
+                ),
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalFloatCapital.toString().toCurrencyString(leadingSymbol: 'Rs. '),
                 ),
               ],
             ),

@@ -59,9 +59,7 @@ class _MarketStatusState extends State<MarketStatus> {
           status = jsonData;
         }
       }
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 
   //gets indexed data
@@ -83,9 +81,7 @@ class _MarketStatusState extends State<MarketStatus> {
           });
         }
       }
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
 
   @override
@@ -122,19 +118,23 @@ class _MarketStatusState extends State<MarketStatus> {
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.end,
                   children: [
-                    Icon(
-                      index != null
-                          ? index['change'] > 0
-                              ? Icons.keyboard_arrow_up
-                              : Icons.keyboard_arrow_down
-                          : Icons.remove,
-                      size: 15.0,
-                      color: index != null
-                          ? index['change'] > 0
-                              ? kColorGreen
-                              : kColorRed.withAlpha(150)
-                          : kColorGrey2,
-                    ),
+                    index != null
+                        ? index['change'] == 0
+                            ? SizedBox.shrink()
+                            : Icon(
+                                index != null
+                                    ? index['change'] > 0
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down
+                                    : Icons.remove,
+                                size: 15.0,
+                                color: index != null
+                                    ? index['change'] < 0
+                                        ? kColorRed.withAlpha(150)
+                                        : kColorGreen
+                                    : kColorGrey2,
+                              )
+                        : SizedBox.shrink(),
                     Text(
                       index == null
                           ? '0.0'.toCurrencyString()
@@ -142,9 +142,9 @@ class _MarketStatusState extends State<MarketStatus> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: index != null
-                            ? index['change'] > 0
-                                ? kColorGreen
-                                : kColorRed.withAlpha(150)
+                            ? index['change'] < 0
+                                ? kColorRed.withAlpha(150)
+                                : kColorGreen
                             : kColorGrey2,
                       ),
                     ),
@@ -161,9 +161,9 @@ class _MarketStatusState extends State<MarketStatus> {
                     fontWeight: FontWeight.bold,
                     fontSize: 10.7,
                     color: index != null
-                        ? index['change'] > 0
-                            ? kColorGreen
-                            : kColorRed.withAlpha(150)
+                        ? index['change'] < 0
+                            ? kColorRed.withAlpha(150)
+                            : kColorGreen
                         : kColorGrey2,
                   ),
                 ),

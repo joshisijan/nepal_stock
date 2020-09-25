@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nepal_stock/api/api_url.dart';
 import 'package:nepal_stock/styles/colors.dart';
 import 'package:nepal_stock/widgets/offline_status.dart';
+import 'package:nepal_stock/widgets/security_detail_day.dart';
 
 class SecurityDetailScreen extends StatefulWidget {
   final String id;
@@ -26,12 +30,17 @@ class _SecurityDetailScreenState extends State<SecurityDetailScreen> {
           title: Text(widget.symbol ?? ''),
           actions: [
             IconButton(
-              icon: Icon(Icons.refresh, color: kColorGreen,),
-              onPressed: (){
+              icon: Icon(
+                Icons.refresh,
+                color: kColorGreen,
+              ),
+              onPressed: () {
                 setState(() {});
               },
             ),
-            SizedBox(width: 15.0,)
+            SizedBox(
+              width: 15.0,
+            )
           ],
         ),
         body: Stack(
@@ -39,24 +48,41 @@ class _SecurityDetailScreenState extends State<SecurityDetailScreen> {
             Container(
               child: FutureBuilder(
                 future: http.get('$kSecurityDetail/${widget.id}'),
-                builder: (context, snapshot){
-                  print('$kSecurityDetail/${widget.id}');
-                  if(snapshot.connectionState != ConnectionState.done){
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
-                  }else{
-                    if(snapshot.hasError){
-                      return Center(child: Text('An error occurred. Try again later.'));
-                    }else{
-                      if(snapshot.data == null){
-                        return Center(child: Text('No data at the moment. Try again later.'));
-                      }else{
-                        if(snapshot.data.statusCode != 200){
-                          return Center(child: Text('An error occurred. Try again later.'));
-                        }else{
+                  } else {
+                    if (snapshot.hasError) {
+                      return Center(
+                          child: Text('An error occurred. Try again later.'));
+                    } else {
+                      if (snapshot.data == null) {
+                        return Center(
+                            child: Text(
+                                'No data at the moment. Try again later.'));
+                      } else {
+                        if (snapshot.data.statusCode != 200) {
+                          return Center(
+                              child:
+                                  Text('An error occurred. Try again later.'));
+                        } else {
                           var data = snapshot.data.body;
-                          return Text(data.toString());
+                          var jsonData = jsonDecode(snapshot.data.body);
+                          return ListView(
+                            padding: EdgeInsets.all(20.0),
+                            children: [
+                              SecurityDetailDay(
+                                securityName: jsonData['security']['securityName'],
+                                data: jsonData['securityDailyTradeDto'],
+                              ),
+                              //for offline status
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                            ],
+                          );
                         }
                       }
                     }

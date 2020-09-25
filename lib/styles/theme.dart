@@ -17,4 +17,5 @@ ThemeData kAppTheme = ThemeData.dark().copyWith(
       fontSize: 11.0,
     ),
   ),
+  accentColor: kColorGreen,
 );

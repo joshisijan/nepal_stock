@@ -4,7 +4,6 @@ class ToolsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      key: PageStorageKey('ToolsScreen'),
       child: ListView(
         padding: EdgeInsets.all(20.0),
         children: [
@@ -17,6 +16,10 @@ class ToolsScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 32.0,
             ),
+          ),
+          //for offline status
+          SizedBox(
+            height: 20.0,
           ),
         ],
       ),

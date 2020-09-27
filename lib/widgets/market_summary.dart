@@ -1,53 +1,41 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter/rendering.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:nepal_stock/api/api_url.dart';
+import 'package:nepal_stock/models/stock_model.dart';
+import 'package:nepal_stock/reuseables/wrap_value.dart';
 import 'package:nepal_stock/styles/colors.dart';
-import 'package:nepal_stock/widgets/wrap_value.dart';
+import 'package:provider/provider.dart';
 
-class MarketSummary extends StatefulWidget {
-  @override
-  _MarketSummaryState createState() => _MarketSummaryState();
-}
-
-class _MarketSummaryState extends State<MarketSummary> {
-  Timer timer;
-  double totalTurnover;
-  double totalTransactions;
-  double totalScrips;
-  double totalShares;
-  double totalCapital;
-  double totalFloatCapital;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getMarketSummary();
-    timer = Timer.periodic(Duration(seconds: 15), (Timer t) {
-      getMarketSummary();
-    });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    timer?.cancel();
-    super.dispose();
-  }
+// ignore: must_be_immutable
+class MarketSummary extends StatelessWidget {
+  double totalTurnover = 0.0;
+  int totalTransactions = 0;
+  int totalScrips = 0;
+  int totalShares = 0;
+  double totalCapital = 0.0;
+  double totalFloatCapital = 0.0;
+  List<dynamic> marketSummary;
 
   @override
   Widget build(BuildContext context) {
+
+    marketSummary = context.select((StockModel stockModel) => stockModel.getMarketSummary());
+
+    if(marketSummary.length > 0){
+      totalTurnover = double.parse(marketSummary[0]['value'].toString());
+      if(marketSummary.length > 1) totalShares = marketSummary[1]['value'];
+      if(marketSummary.length > 2) totalTransactions = marketSummary[2]['value'];
+      if(marketSummary.length > 3) totalScrips = marketSummary[3]['value'];
+      if(marketSummary.length > 4) totalCapital = double.parse(marketSummary[4]['value'].toString());
+      if(marketSummary.length > 5) totalFloatCapital = double.parse(marketSummary[5]['value'].toString());
+    }
+
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      margin: EdgeInsets.symmetric(vertical: 1.0),
       child: Column(
         children: [
           Container(
-            color: kColorBlack2,
+            color: kColorBlack1.withAlpha(150),
             width: double.maxFinite,
             padding: EdgeInsets.all(10.0),
             child: Row(
@@ -66,10 +54,13 @@ class _MarketSummaryState extends State<MarketSummary> {
             ),
           ),
           SizedBox(
-            height: 5.0,
+            height: 1.0,
           ),
-          Container(
-            color: kColorBlack2,
+          marketSummary.length <= 0
+              ? Container(height: 1.0, child: LinearProgressIndicator())
+              : SizedBox.shrink(),
+          marketSummary.length > 4 ? Container(
+            color: kColorBlack1.withAlpha(150),
             width: double.maxFinite,
             padding: EdgeInsets.all(10.0),
             child: Wrap(
@@ -131,64 +122,51 @@ class _MarketSummaryState extends State<MarketSummary> {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  getMarketSummary() async {
-    try {
-      var marketSummary = await http.get(kMarketSummary);
-      var jsonData = jsonDecode(marketSummary.body);
-      if (totalTurnover != double.parse(jsonData[0]['value'].toString()) ||
-          totalShares != double.parse(jsonData[1]['value'].toString()) ||
-          totalTransactions != double.parse(jsonData[2]['value'].toString()) ||
-          totalScrips != double.parse(jsonData[3]['value'].toString()) ||
-          totalCapital != double.parse(jsonData[4]['value'].toString()) ||
-          totalFloatCapital != double.parse(jsonData[5]['value'].toString())) {
-        setState(() {
-          totalTurnover = double.parse(jsonData[0]['value'].toString());
-          totalShares = double.parse(jsonData[1]['value'].toString());
-          totalTransactions = double.parse(jsonData[2]['value'].toString());
-          totalScrips = double.parse(jsonData[3]['value'].toString());
-          totalCapital = double.parse(jsonData[4]['value'].toString());
-          totalFloatCapital = double.parse(jsonData[5]['value'].toString());
-        });
-      }
-    } catch (e) {}
-  }
-}
-
-class MarketColumn extends StatelessWidget {
-  final String title;
-  final double value;
-
-  const MarketColumn({
-    Key key,
-    @required this.title,
-    @required this.value,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 11.7),
-          ),
-          Text(
-            value != null ? value.toString().toCurrencyString() : '...',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: kColorGrey2,
-                fontSize: 11.5),
+          ) : Container(
+            color: kColorBlack1.withAlpha(150),
+            width: double.maxFinite,
+            padding: EdgeInsets.all(10.0),
+            child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                WrapValue(
+                  title: 'Total Turnover (Rs)',
+                  moreSpacing: 10.0,
+                  isBold: true,
+                ),
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalTurnover.toString().toCurrencyString(leadingSymbol: 'Rs. '),
+                ),
+                WrapValue(
+                  title: 'Total Traded Shares',
+                  moreSpacing: 10.0,
+                  isBold: true,
+                ),
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalShares.toString().toCurrencyString(mantissaLength: 0),
+                ),
+                WrapValue(
+                  title: 'Total Transactions',
+                  moreSpacing: 10.0,
+                  isBold: true,
+                ),
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalTransactions.toString().toCurrencyString(mantissaLength: 0),
+                ),
+                WrapValue(
+                  title: 'Total Scrips Traded',
+                  moreSpacing: 10.0,
+                  isBold: true,
+                ),
+                WrapValue(
+                  moreSpacing: 10.0,
+                  title: totalScrips.toString().toCurrencyString(mantissaLength: 0),
+                ),
+              ],
+            ),
           ),
         ],
       ),

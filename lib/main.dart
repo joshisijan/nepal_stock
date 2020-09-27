@@ -1,13 +1,18 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nepal_stock/models/stock_model.dart';
+import 'package:nepal_stock/models/watchlist_model.dart';
+import 'package:nepal_stock/reuseables/offline_status.dart';
 import 'package:nepal_stock/screens/home_screen.dart';
 import 'package:nepal_stock/screens/portfolio_screen.dart';
 import 'package:nepal_stock/screens/search_screen.dart';
 import 'package:nepal_stock/screens/tools_screen.dart';
 import 'package:nepal_stock/screens/watchlist_screen.dart';
 import 'package:nepal_stock/styles/theme.dart';
-import 'package:nepal_stock/widgets/offline_status.dart';
+import 'package:provider/provider.dart';
 
+import 'models/portfolio_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,11 +25,31 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
       DeviceOrientation.portraitUp,
     ]);
-    return MaterialApp(
-      title: 'Nepal Stock App',
-      debugShowCheckedModeBanner: false,
-      theme: kAppTheme,
-      home: AppBase(),
+    return DynamicTheme(
+      defaultBrightness: kAppDarkTheme.brightness,
+      data: (brightness) => kAppDarkTheme,
+      themedWidgetBuilder: (context, theme){
+        return MaterialApp(
+          title: 'Nepal Stock App',
+          debugShowCheckedModeBanner: false,
+          theme: theme,
+          darkTheme: kAppDarkTheme,
+          home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                  create: (_) => StockModel()
+              ),
+              ChangeNotifierProvider(
+                  create: (_) => WatchlistModel()
+              ),
+              ChangeNotifierProvider(
+                  create: (_) => PortfolioModel()
+              ),
+            ],
+            child: AppBase(),
+          ),
+        );
+      },
     );
   }
 }
@@ -36,6 +61,18 @@ class AppBase extends StatefulWidget {
 
 class _AppBaseState extends State<AppBase> {
   int _bottomNavigationBarIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<StockModel>().setEverything();
+  }
+
+  @override
+  void dispose() {
+    context.read<StockModel>().dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +99,7 @@ class _AppBaseState extends State<AppBase> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavigationBarIndex,
-        onTap: (n){
+        onTap: (n) {
           setState(() {
             _bottomNavigationBarIndex = n;
           });
@@ -93,4 +130,3 @@ class _AppBaseState extends State<AppBase> {
     );
   }
 }
-

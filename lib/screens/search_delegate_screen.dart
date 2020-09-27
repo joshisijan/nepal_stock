@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:nepal_stock/models/watchlist_model.dart';
+import 'package:nepal_stock/reuseables/confirm_alert.dart';
 import 'package:nepal_stock/screens/security_detail_screen.dart';
 
 class SearchDelegateScreen extends SearchDelegate {
   final List<dynamic> companies;
+  final int typeInt; // 0 default 1 for portfolio and 2 for watchlist
 
-  SearchDelegateScreen({@required this.companies});
+  SearchDelegateScreen({@required this.companies, this.typeInt = 0});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -48,7 +51,47 @@ class SearchDelegateScreen extends SearchDelegate {
           subtitle: Text(companies[index]['securityName'].toString()),
           trailing: IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              if(typeInt == 2){
+                WatchlistModel().checkExists(companies[index]['id']).then((value){
+                  if(value == true){
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ConfirmAlert(
+                          title: 'Already in Watchlist',
+                          content:
+                          '${companies[index]['symbol']} (${companies[index]['securityName']}) is already in your watchlist.',
+                          onYes: () {
+                            Navigator.pop(context);
+                          },
+                          showNo: false,
+                        );
+                      },
+                    );
+                  }else{
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ConfirmAlert(
+                          title: 'Add to Watchlist',
+                          content:
+                          'Do you want to add ${companies[index]['symbol']} (${companies[index]['securityName']}) to watchlist?',
+                          onYes: () {
+                            WatchlistModel().insertWatchlist(WatchlistModel(
+                              id: companies[index]['id'].toString(),
+                              symbol: companies[index]['symbol'].toString(),
+                              name: companies[index]['securityName'].toString(),
+                            ));
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
+                    );
+                  }
+                });
+              }
+            },
           ),
           onTap: () {
             print(companies[index]['id'].toString());
@@ -74,7 +117,7 @@ class SearchDelegateScreen extends SearchDelegate {
           element['symbol'].toString().toLowerCase().contains(query) ||
           element['securityName'].toString().toLowerCase().contains(query);
     }).toList();
-    if(result.length <= 0){
+    if (result.length <= 0) {
       return Center(
         child: Text('Nothing found. Change your search query.'),
       );
@@ -89,7 +132,47 @@ class SearchDelegateScreen extends SearchDelegate {
           subtitle: Text(result[index]['securityName'].toString()),
           trailing: IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              if(typeInt == 2){
+                WatchlistModel().checkExists(companies[index]).then((value){
+                  if(value == true){
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ConfirmAlert(
+                          title: 'Already in Watchlist',
+                          content:
+                          '${companies[index]['symbol']} (${companies[index]['securityName']}) is already in your watchlist.',
+                          onYes: () {
+                            Navigator.pop(context);
+                          },
+                          showNo: false,
+                        );
+                      },
+                    );
+                  }else{
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ConfirmAlert(
+                          title: 'Add to Watchlist',
+                          content:
+                          'Do you want to add ${companies[index]['symbol']} (${companies[index]['securityName']}) to watchlist?',
+                          onYes: () {
+                            WatchlistModel().insertWatchlist(WatchlistModel(
+                              id: companies[index]['id'].toString(),
+                              symbol: companies[index]['symbol'].toString(),
+                              name: companies[index]['securityName'].toString(),
+                            ));
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
+                    );
+                  }
+                });
+              }
+            },
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(

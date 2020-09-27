@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nepal_stock/reuseables/detail_header.dart';
+import 'package:nepal_stock/reuseables/wrap_value.dart';
 import 'package:nepal_stock/styles/colors.dart';
-import 'package:nepal_stock/widgets/detail_header.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:nepal_stock/widgets/wrap_value.dart';
 
 class SecurityDetailDay extends StatelessWidget {
   final String securityName;
@@ -31,7 +31,7 @@ class SecurityDetailDay extends StatelessWidget {
           header: 'Daily Trade Detail',
         ),
         Container(
-          color: kColorBlack2,
+          color: kColorBlack1.withAlpha(150),
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
           width: double.maxFinite,
           child: Wrap(

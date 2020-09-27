@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:nepal_stock/styles/colors.dart';
 
 
-ThemeData kAppTheme = ThemeData.dark().copyWith(
-  scaffoldBackgroundColor: kColorBlack1,
+ThemeData kAppLightTheme = ThemeData.light();
+
+ThemeData kAppDarkTheme = ThemeData.dark().copyWith(
+  scaffoldBackgroundColor: kColorBlack2,
   cursorColor: kColorGreen,
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    backgroundColor: kColorBlack2,
+    backgroundColor: kColorBlack1,
     type: BottomNavigationBarType.fixed,
     selectedItemColor: kColorGreen,
     unselectedItemColor: kColorGrey2,

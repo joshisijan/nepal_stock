@@ -5,13 +5,9 @@ import 'package:nepal_stock/styles/colors.dart';
 
 class CustomLineChart extends StatefulWidget {
   final List<TimeValueModel> data;
-  final double min;
-  final double max;
   const CustomLineChart({
     Key key,
     @required this.data,
-    this.min = 0,
-    this.max = 2000,
   }) : super(key: key);
 
   @override
@@ -39,15 +35,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
             color: charts.ColorUtil.fromDartColor(kColorGrey2),
           ),
         ),
-        tickProviderSpec: charts.StaticNumericTickProviderSpec(
-          <charts.TickSpec<num>>[
-            charts.TickSpec<num>(this.widget.max +
-                ((this.widget.min + this.widget.max) * 0.5) * 0.0005),
-            charts.TickSpec<num>((this.widget.min + this.widget.max) * 0.5),
-            charts.TickSpec<num>(this.widget.min -
-                ((this.widget.min + this.widget.max) * 0.5) * 0.0005),
-          ],
-        ),
+        tickProviderSpec: charts.NumericEndPointsTickProviderSpec(),
       ),
       domainAxis: charts.DateTimeAxisSpec(
         renderSpec: charts.GridlineRendererSpec(

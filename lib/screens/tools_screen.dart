@@ -5,7 +5,7 @@ class ToolsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ListView(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(10.0),
         children: [
           SizedBox(
             height: MediaQuery.of(context).padding.top + 32.0,

@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nepal_stock/api/api_url.dart';
+import 'package:nepal_stock/reuseables/offline_status.dart';
 import 'package:nepal_stock/styles/colors.dart';
-import 'package:nepal_stock/widgets/offline_status.dart';
 import 'package:nepal_stock/widgets/security_detail_day.dart';
 
 class SecurityDetailScreen extends StatefulWidget {

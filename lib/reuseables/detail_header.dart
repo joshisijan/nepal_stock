@@ -8,15 +8,15 @@ class DetailHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
+      margin: EdgeInsets.only(top: 10.0, bottom: 1.0),
       padding: EdgeInsets.all(10.0),
-      color: kColorBlack2,
+      color: kColorBlack1.withAlpha(150),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Daily Trade Detail',
+            this.header,
             textAlign: TextAlign.left,
             style: TextStyle(
               fontWeight: FontWeight.bold,

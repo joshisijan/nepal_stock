@@ -1,4 +1,5 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nepal_stock/models/stock_model.dart';
@@ -26,8 +27,14 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
     return DynamicTheme(
-      defaultBrightness: kAppDarkTheme.brightness,
-      data: (brightness) => kAppDarkTheme,
+      defaultBrightness: Brightness.light,
+      data: (brightness){
+        if(brightness == Brightness.light){
+          return kAppLightTheme;
+        }else{
+          return kAppDarkTheme;
+        }
+      },
       themedWidgetBuilder: (context, theme){
         return MaterialApp(
           title: 'Nepal Stock App',
@@ -79,15 +86,21 @@ class _AppBaseState extends State<AppBase> {
     return Scaffold(
       body: Stack(
         children: [
-          IndexedStack(
-            index: _bottomNavigationBarIndex,
-            children: [
-              HomeScreen(),
-              SearchScreen(),
-              PortfolioScreen(),
-              WatchlistScreen(),
-              ToolsScreen(),
-            ],
+          Positioned(
+            top: -MediaQuery.of(context).padding.top,
+            right: 0.0,
+            bottom: 0.0,
+            left: 0.0,
+            child: IndexedStack(
+              index: _bottomNavigationBarIndex,
+              children: [
+                HomeScreen(),
+                SearchScreen(),
+                PortfolioScreen(),
+                WatchlistScreen(),
+                ToolsScreen(),
+              ],
+            ),
           ),
           Positioned(
             bottom: 0.0,

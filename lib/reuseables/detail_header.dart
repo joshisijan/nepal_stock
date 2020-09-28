@@ -10,7 +10,7 @@ class DetailHeader extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 10.0, bottom: 1.0),
       padding: EdgeInsets.all(10.0),
-      color: kColorBlack1.withAlpha(150),
+      color: Theme.of(context).brightness == Brightness.light ? Theme.of(context).canvasColor : kColorBlack1.withAlpha(150),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,7 +22,7 @@ class DetailHeader extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Icon(Icons.keyboard_arrow_down)
+          Icon(Icons.keyboard_arrow_down, color: Theme.of(context).textTheme.subtitle1.color,)
         ],
       ),
     );

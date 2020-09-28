@@ -75,7 +75,7 @@ class PortfolioModel extends ChangeNotifier {
   deletePortfolio(id) async {
     try {
       Database db = await dB();
-      await db.delete('portfolio', where: 'id = $portfolioId');
+      await db.delete('portfolio', where: 'id = $id');
       notifyListeners();
     } catch (e) {
       print('error from delete\n' + e.toString());

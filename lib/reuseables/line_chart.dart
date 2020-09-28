@@ -32,7 +32,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
       primaryMeasureAxis: charts.NumericAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
           labelStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(kColorGrey2),
+            color: charts.ColorUtil.fromDartColor(Theme.of(context).textTheme.caption.color),
           ),
         ),
         tickProviderSpec: charts.NumericEndPointsTickProviderSpec(),
@@ -40,7 +40,7 @@ class _CustomLineChartState extends State<CustomLineChart> {
       domainAxis: charts.DateTimeAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
           labelStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(kColorGrey2),
+            color: charts.ColorUtil.fromDartColor(Theme.of(context).textTheme.caption.color),
           ),
         ),
       ),

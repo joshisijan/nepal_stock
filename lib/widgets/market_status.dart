@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nepal_stock/models/stock_model.dart';
+import 'package:nepal_stock/reuseables/custom_linear_progress.dart';
 import '../styles/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
@@ -19,13 +20,13 @@ class _MarketStatusState extends State<MarketStatus> {
     nepseIndexValue = context
         .select((StockModel stockModel) => stockModel.getNepseIndexValue());
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 15.0),
-      color: kColorBlack1.withAlpha(150),
+      margin: EdgeInsets.only(bottom: 15.0),
+      color: Theme.of(context).canvasColor,
       child: Column(
         children: [
-          marketStatus == null || nepseIndexValue == null
-              ? Container(height: 1.0, child: LinearProgressIndicator())
-              : SizedBox.shrink(),
+          SizedBox(
+            height: 15.0,
+          ),
           ListTile(
             isThreeLine: true,
             dense: true,
@@ -47,9 +48,7 @@ class _MarketStatusState extends State<MarketStatus> {
                           : nepseIndexValue['currentValue']
                               .toString()
                               .toCurrencyString(),
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
-                            color: kColorGrey2,
-                          ),
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                     SizedBox(
                       width: 5.0,
@@ -69,7 +68,7 @@ class _MarketStatusState extends State<MarketStatus> {
                                     size: 15.0,
                                     color: nepseIndexValue != null
                                         ? nepseIndexValue['change'] < 0
-                                            ? kColorRed.withAlpha(150)
+                                            ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150)
                                             : kColorGreen
                                         : kColorGrey2,
                                   )
@@ -84,9 +83,9 @@ class _MarketStatusState extends State<MarketStatus> {
                             fontWeight: FontWeight.bold,
                             color: nepseIndexValue != null
                                 ? nepseIndexValue['change'] < 0
-                                    ? kColorRed.withAlpha(150)
+                                    ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150)
                                     : nepseIndexValue['change'] == 0
-                                        ? kColorGrey2
+                                        ? Theme.of(context).textTheme.subtitle1.color
                                         : kColorGreen
                                 : kColorGrey2,
                           ),
@@ -105,11 +104,11 @@ class _MarketStatusState extends State<MarketStatus> {
                         fontSize: 10.7,
                         color: nepseIndexValue != null
                             ? nepseIndexValue['change'] < 0
-                            ? kColorRed.withAlpha(150)
+                            ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150)
                             : nepseIndexValue['change'] == 0
-                            ? kColorGrey2
+                            ? Theme.of(context).textTheme.subtitle1.color
                             : kColorGreen
-                            : kColorGrey2,
+                            : Theme.of(context).textTheme.subtitle1.color,
                       ),
                     ),
                   ],
@@ -125,7 +124,7 @@ class _MarketStatusState extends State<MarketStatus> {
                   style: TextStyle(
                     fontSize: 11.5,
                     fontWeight: FontWeight.bold,
-                    color: kColorGrey2,
+                    color: Theme.of(context).textTheme.subtitle1.color,
                   ),
                 ),
               ],
@@ -134,9 +133,9 @@ class _MarketStatusState extends State<MarketStatus> {
               padding: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 color: marketStatus == null
-                    ? kColorBlack1
+                    ? Theme.of(context).canvasColor
                     : marketStatus['isOpen'] == "CLOSE"
-                        ? kColorRed.withAlpha(150)
+                        ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150)
                         : kColorGreen,
               ),
               child: Text(
@@ -148,10 +147,17 @@ class _MarketStatusState extends State<MarketStatus> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 11.5,
+                  color: Theme.of(context).textTheme.subtitle1.color,
                 ),
               ),
             ),
           ),
+          SizedBox(
+            height: 15.0,
+          ),
+          marketStatus == null || nepseIndexValue == null
+              ? CustomLinearProgress()
+              : SizedBox.shrink(),
         ],
       ),
     );

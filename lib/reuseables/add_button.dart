@@ -21,11 +21,11 @@ class AddButton extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 10.0),
         width: 100.0,
         child: MaterialButton(
-          splashColor: kColorGreen.withAlpha(150),
+          splashColor: Theme.of(context).brightness == Brightness.light ? Theme.of(context).textTheme.subtitle1.color.withAlpha(150) :Theme.of(context).accentColor.withAlpha(150),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
               side: BorderSide(
-                color: kColorGreen,
+                color: Theme.of(context).brightness == Brightness.light ? Theme.of(context).textTheme.subtitle1.color :Theme.of(context).accentColor,
               )),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -33,17 +33,17 @@ class AddButton extends StatelessWidget {
             children: [
               !loading ? Icon(
                 Icons.add,
-                color: kColorGreen,
+                color: Theme.of(context).brightness == Brightness.light ? Theme.of(context).textTheme.subtitle1.color :Theme.of(context).accentColor,
                 size: 20.0,
               ) :
-              Container(width: 12.0, height: 12.0,child: CircularProgressIndicator(strokeWidth: 2.0,)),
+              Container(width: 12.0, height: 12.0,child: CircularProgressIndicator(strokeWidth: 2.0,valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).brightness == Brightness.light ? Theme.of(context).textTheme.subtitle1.color :Theme.of(context).accentColor),)),
               SizedBox(
                 width: 5.0,
               ),
               Text(
                 'ADD',
                 style: TextStyle(
-                  color: kColorGreen,
+                  color: Theme.of(context).brightness == Brightness.light ? Theme.of(context).textTheme.subtitle1.color :Theme.of(context).accentColor,
                 ),
               ),
             ],

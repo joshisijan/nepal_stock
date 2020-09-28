@@ -9,7 +9,7 @@ class WrapValue extends StatelessWidget {
     Key key,
     this.isBold = false,
     this.moreSpacing = 0.0,
-    this.color = Colors.white,
+    @required this.color,
     @required this.title,
   }) : super(key: key);
   @override
@@ -28,6 +28,7 @@ class WrapValue extends StatelessWidget {
           )
               : TextStyle(
             fontSize: 12.5,
+            fontWeight: FontWeight.w500,
             color: color,
           )),
     );

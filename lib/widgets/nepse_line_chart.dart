@@ -2,6 +2,7 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:nepal_stock/models/stock_model.dart';
 import 'package:nepal_stock/models/time_value_model.dart';
+import 'package:nepal_stock/reuseables/custom_linear_progress.dart';
 import 'package:nepal_stock/reuseables/line_chart.dart';
 import 'package:nepal_stock/styles/colors.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,7 @@ class _NepseLineChartState extends State<NepseLineChart> {
       children: [
         Container(
             height: 200,
-            color: kColorBlack1.withAlpha(150),
+            color: Theme.of(context).cardColor,
             padding: EdgeInsets.only(left: 10.0),
             child:
             indexChart != null  ? CustomLineChart(
@@ -40,10 +41,10 @@ class _NepseLineChartState extends State<NepseLineChart> {
             ) : SizedBox.shrink()
         ),
         indexValue.length <= 0 || indexChart.length <= 0
-            ? Container(height: 1.0, child: LinearProgressIndicator())
+            ? CustomLinearProgress()
             : SizedBox.shrink(),
         Container(
-          color: kColorBlack1.withAlpha(150),
+          color: Theme.of(context).cardColor,
           child: ListTile(
             contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
             dense: true,
@@ -53,6 +54,7 @@ class _NepseLineChartState extends State<NepseLineChart> {
                   : 'NEPSE Index',
               style: Theme.of(context).textTheme.subtitle1.copyWith(
                     fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.caption.color,
                   ),
               // style: ,
             ),
@@ -68,7 +70,7 @@ class _NepseLineChartState extends State<NepseLineChart> {
                               .toCurrencyString()
                           : '0000.0',
                       style: Theme.of(context).textTheme.bodyText1.copyWith(
-                            color: kColorGrey2,
+                            color: Theme.of(context).textTheme.caption.color,
                           ),
                     ),
                     SizedBox(
@@ -89,9 +91,9 @@ class _NepseLineChartState extends State<NepseLineChart> {
                                     size: 15.0,
                                     color: selectedIndexValue != null
                                         ? selectedIndexValue['change'] < 0
-                                            ? kColorRed.withAlpha(150)
+                                            ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150)
                                             : kColorGreen
-                                        : kColorGrey2,
+                                        : Theme.of(context).textTheme.caption.color,
                                   )
                             : SizedBox.shrink(),
                         Text(
@@ -104,7 +106,7 @@ class _NepseLineChartState extends State<NepseLineChart> {
                             fontWeight: FontWeight.bold,
                             color: selectedIndexValue != null
                                 ? selectedIndexValue['change'] < 0
-                                    ? kColorRed.withAlpha(150)
+                                    ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150)
                                     : kColorGreen
                                 : kColorGrey2,
                           ),
@@ -125,7 +127,7 @@ class _NepseLineChartState extends State<NepseLineChart> {
                         fontSize: 10.7,
                         color: selectedIndexValue != null
                             ? selectedIndexValue['change'] < 0
-                                ? kColorRed.withAlpha(150)
+                                ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150)
                                 : kColorGreen
                             : kColorGrey2,
                       ),
@@ -138,14 +140,17 @@ class _NepseLineChartState extends State<NepseLineChart> {
         ),
         Container(
           width: double.maxFinite,
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
           child: Wrap(
             alignment: WrapAlignment.spaceBetween,
             children: [
               Container(
-                color: kColorBlack1.withAlpha(150),
+                color: Theme.of(context).canvasColor,
                 padding: EdgeInsets.all(5.0),
                 margin: EdgeInsets.symmetric(vertical: 10.0),
                 child: DropdownButton(
+                  iconEnabledColor: kColorWhite2.withAlpha(200),
+                  dropdownColor: Theme.of(context).brightness == Brightness.light ? Theme.of(context).canvasColor : kColorBlack2,
                   isDense: true,
                   underline: SizedBox.shrink(),
                   onChanged: (value) {
@@ -156,27 +161,21 @@ class _NepseLineChartState extends State<NepseLineChart> {
                     context.read<StockModel>().setIndexChart(selectedSymbol);
                   },
                   value: selectedSymbol,
-                  dropdownColor: kColorBlack2,
-                  items: indexValue == null
-                      ? [
-                          DropdownMenuItem(
-                            value: 58,
-                            child: Text('Loading...'),
-                          ),
-                        ]
-                      : indexValue.map((element) {
-                          return DropdownMenuItem(
-                            value: element['id'],
-                            child: Text(element['index'].toString()),
-                          );
-                        }).toList(),
+                  items: indexValue.map((element) {
+                    return DropdownMenuItem(
+                      value: element['id'],
+                      child: Text(element['index'].toString()),
+                    );
+                  }).toList(),
                 ),
               ),
               Container(
-                color: kColorBlack1.withAlpha(150),
+                color: Theme.of(context).canvasColor,
                 padding: EdgeInsets.all(5.0),
                 margin: EdgeInsets.symmetric(vertical: 10.0),
                 child: DropdownButton(
+                  iconEnabledColor: kColorWhite2.withAlpha(200),
+                  dropdownColor: Theme.of(context).brightness == Brightness.light ? Theme.of(context).canvasColor : kColorBlack2,
                   isDense: true,
                   onChanged: (value) {
                     setState(() {

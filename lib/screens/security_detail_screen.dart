@@ -27,12 +27,20 @@ class _SecurityDetailScreenState extends State<SecurityDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.symbol ?? ''),
+          title: Text(
+            widget.symbol ?? '',
+            style: TextStyle(
+              color: Theme.of(context).textTheme.subtitle1.color,
+              fontSize: 18.0,
+            ),
+          ),
           actions: [
             IconButton(
               icon: Icon(
                 Icons.refresh,
-                color: kColorGreen,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Theme.of(context).textTheme.subtitle1.color
+                    : kColorGreen,
               ),
               onPressed: () {
                 setState(() {});
@@ -51,35 +59,50 @@ class _SecurityDetailScreenState extends State<SecurityDetailScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).brightness == Brightness.light ? Theme.of(context).canvasColor : kColorGreen),
+                      ),
                     );
                   } else {
                     if (snapshot.hasError) {
                       return Center(
-                          child: Text('An error occurred. Try again later.'));
+                          child: Text(
+                        'An error occurred. Try again later.',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.caption.color,
+                        ),
+                      ));
                     } else {
                       if (snapshot.data == null) {
                         return Center(
                             child: Text(
-                                'No data at the moment. Try again later.'));
+                          'No data at the moment. Try again later.',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.caption.color,
+                          ),
+                        ));
                       } else {
                         if (snapshot.data.statusCode != 200) {
                           return Center(
-                              child:
-                                  Text('An error occurred. Try again later.'));
+                              child: Text(
+                            'An error occurred. Try again later.',
+                            style: TextStyle(
+                              color: Theme.of(context).textTheme.caption.color,
+                            ),
+                          ));
                         } else {
                           var data = snapshot.data.body;
-                          var jsonData = jsonDecode(snapshot.data.body);
+                          var jsonData = jsonDecode(data);
                           return ListView(
-                            padding: EdgeInsets.all(20.0),
                             children: [
                               SecurityDetailDay(
-                                securityName: jsonData['security']['securityName'],
+                                securityName: jsonData['security']
+                                    ['securityName'],
                                 data: jsonData['securityDailyTradeDto'],
                               ),
                               //for offline status
                               SizedBox(
-                                height: 20.0,
+                                height: 40.0,
                               ),
                             ],
                           );

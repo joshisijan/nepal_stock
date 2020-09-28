@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ToolsScreen extends StatelessWidget {
@@ -5,21 +6,30 @@ class ToolsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ListView(
-        padding: EdgeInsets.all(10.0),
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).padding.top + 32.0,
+          Container(
+            height: MediaQuery.of(context).padding.top + 24.0,
+            color: Theme.of(context).canvasColor,
           ),
-          Text(
-            'Tools',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 32.0,
+          Container(
+            color: Theme.of(context).canvasColor,
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              'Tools',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 32.0,
+                color: Theme.of(context).textTheme.subtitle1.color,
+              ),
             ),
+          ),
+          Container(
+            height: 24.0,
+            color: Theme.of(context).canvasColor,
           ),
           //for offline status
           SizedBox(
-            height: 20.0,
+            height: 40.0,
           ),
         ],
       ),

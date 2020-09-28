@@ -50,16 +50,16 @@ class _OfflineStatusState extends State<OfflineStatus> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: kColorBlack2,
+      color: kColorBlack1,
       child: !connected
           ? Container(
-              color: kColorRed.withAlpha(150),
+              color: Theme.of(context).brightness == Brightness.light ? kColorRed1 : kColorRed1.withAlpha(200),
               padding: EdgeInsets.symmetric(vertical: 5.0),
               child: Text(
                 'You are offline. Check your connection.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 11.7,
+                  fontSize: 10.7,
                 ),
               ),
             )
@@ -71,7 +71,7 @@ class _OfflineStatusState extends State<OfflineStatus> {
                     'You\'re online.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 11.7,
+                      fontSize: 10.7,
                     ),
                   ),
                 )

@@ -23,15 +23,20 @@ class SecurityDetailDay extends StatelessWidget {
     if(perChange == -0.0) perChange = 0.0;
     return Column(
       children: [
-        Text(
-          securityName ?? '',
-          style: Theme.of(context).textTheme.bodyText1,
+        Container(
+          padding: EdgeInsets.only(top: 10.0),
+          child: Text(
+            securityName ?? '',
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+              color: Theme.of(context).textTheme.caption.color,
+            ),
+          ),
         ),
         DetailHeader(
           header: 'Daily Trade Detail',
         ),
         Container(
-          color: kColorBlack1.withAlpha(150),
+          color: Theme.of(context).cardColor,
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
           width: double.maxFinite,
           child: Wrap(
@@ -39,95 +44,114 @@ class SecurityDetailDay extends StatelessWidget {
             children: [
               WrapValue(
                 title: 'Updated Time',
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
                 isBold: true,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
+                moreSpacing: -10.0,
                 title: DateFormat("d MMMM, y | hh:mm a").format(
                     DateTime.parse(data['lastUpdatedDateTime'].toString())),
-                moreSpacing: 10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: 'Last Traded Price',
                 isBold: true,
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: data['lastTradedPrice'].toString().toCurrencyString(leadingSymbol: 'Rs ') + ' ' + (changePrice < 0 ? String.fromCharCode(8595) : changePrice != 0 ? String.fromCharCode(8593) : '') + ' ' + changePrice.toString().toCurrencyString() + ' (' + perChange.toString().toCurrencyString() + '%)',
-                color: changePrice < 0 ? kColorRed : kColorGreen,
-                moreSpacing: 10.0,
+                color: changePrice < 0 ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150) : kColorGreen,
+                moreSpacing: -10.0,
               ),
               WrapValue(
                 title: 'Total Traded Quantity',
                 isBold: true,
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: data['totalTradeQuantity'].toString().toCurrencyString(mantissaLength: 0,),
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: 'Total Trades',
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
                 isBold: true,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: data['totalTrades'].toString().toCurrencyString(mantissaLength: 0,),
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: 'Previous Day Closing Price',
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
                 isBold: true,
               ),
               WrapValue(
                 title: data['lastTradedPrice'].toString().toCurrencyString(leadingSymbol: 'Rs ',),
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: 'High | Low',
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
                 isBold: true,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
                 title: data['highPrice'].toString().toCurrencyString(leadingSymbol: 'Rs ',) + ' | ' + data['lowPrice'].toString().toCurrencyString(leadingSymbol: 'Rs ',),
               ),
               WrapValue(
                 title: '52 week high',
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
                 isBold: true,
               ),
               WrapValue(
                 title: data['fiftyTwoWeekHigh'].toString().toCurrencyString(leadingSymbol: 'Rs ',),
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: '52 week low',
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
                 isBold: true,
               ),
               WrapValue(
                 title: data['fiftyTwoWeekLow'].toString().toCurrencyString(leadingSymbol: 'Rs ',),
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: 'Open Price',
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
                 isBold: true,
               ),
               WrapValue(
                 title: data['openPrice'].toString().toCurrencyString(leadingSymbol: 'Rs ',),
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
               WrapValue(
                 title: 'Close Price',
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
                 isBold: true,
               ),
               WrapValue(
                 title: data['closePrice'].toString().toCurrencyString(leadingSymbol: 'Rs ',),
-                moreSpacing: 10.0,
+                moreSpacing: -10.0,
+                color: Theme.of(context).textTheme.caption.color,
               ),
             ],
           ),

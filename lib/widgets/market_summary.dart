@@ -2,6 +2,7 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:nepal_stock/models/stock_model.dart';
+import 'package:nepal_stock/reuseables/custom_linear_progress.dart';
 import 'package:nepal_stock/reuseables/wrap_value.dart';
 import 'package:nepal_stock/styles/colors.dart';
 import 'package:provider/provider.dart';
@@ -35,9 +36,9 @@ class MarketSummary extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            color: kColorBlack1.withAlpha(150),
+            color: Theme.of(context).cardColor,
             width: double.maxFinite,
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,6 +48,7 @@ class MarketSummary extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.caption.color,
                   ),
                 ),
                 Icon(Icons.keyboard_arrow_down)
@@ -57,10 +59,10 @@ class MarketSummary extends StatelessWidget {
             height: 1.0,
           ),
           marketSummary.length <= 0
-              ? Container(height: 1.0, child: LinearProgressIndicator())
+              ? CustomLinearProgress()
               : SizedBox.shrink(),
           marketSummary.length > 4 ? Container(
-            color: kColorBlack1.withAlpha(150),
+            color: Theme.of(context).cardColor,
             width: double.maxFinite,
             padding: EdgeInsets.all(10.0),
             child: Wrap(
@@ -70,60 +72,72 @@ class MarketSummary extends StatelessWidget {
                   title: 'Total Turnover (Rs)',
                   moreSpacing: 10.0,
                   isBold: true,
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalTurnover.toString().toCurrencyString(leadingSymbol: 'Rs. '),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   title: 'Total Traded Shares',
                   moreSpacing: 10.0,
                   isBold: true,
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalShares.toString().toCurrencyString(mantissaLength: 0),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   title: 'Total Transactions',
                   moreSpacing: 10.0,
                   isBold: true,
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalTransactions.toString().toCurrencyString(mantissaLength: 0),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   title: 'Total Scrips Traded',
                   moreSpacing: 10.0,
                   isBold: true,
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalScrips.toString().toCurrencyString(mantissaLength: 0),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   title: 'Total Market Capitalization (Rs)',
                   moreSpacing: 10.0,
                   isBold: true,
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalCapital.toString().toCurrencyString(leadingSymbol: 'Rs. '),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   title: 'Total Float Market Capitalization (Rs)',
+                  color: Theme.of(context).textTheme.caption.color,
                   moreSpacing: 10.0,
                   isBold: true,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalFloatCapital.toString().toCurrencyString(leadingSymbol: 'Rs. '),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
               ],
             ),
           ) : Container(
-            color: kColorBlack1.withAlpha(150),
+            color: Theme.of(context).cardColor,
             width: double.maxFinite,
             padding: EdgeInsets.all(10.0),
             child: Wrap(
@@ -131,39 +145,47 @@ class MarketSummary extends StatelessWidget {
               children: [
                 WrapValue(
                   title: 'Total Turnover (Rs)',
+                  color: Theme.of(context).textTheme.caption.color,
                   moreSpacing: 10.0,
                   isBold: true,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalTurnover.toString().toCurrencyString(leadingSymbol: 'Rs. '),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   title: 'Total Traded Shares',
                   moreSpacing: 10.0,
+                  color: Theme.of(context).textTheme.caption.color,
                   isBold: true,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalShares.toString().toCurrencyString(mantissaLength: 0),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   title: 'Total Transactions',
                   moreSpacing: 10.0,
                   isBold: true,
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalTransactions.toString().toCurrencyString(mantissaLength: 0),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   title: 'Total Scrips Traded',
                   moreSpacing: 10.0,
                   isBold: true,
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
                 WrapValue(
                   moreSpacing: 10.0,
                   title: totalScrips.toString().toCurrencyString(mantissaLength: 0),
+                  color: Theme.of(context).textTheme.caption.color,
                 ),
               ],
             ),

@@ -2,7 +2,6 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:nepal_stock/reuseables/confirm_alert.dart';
 import 'package:nepal_stock/reuseables/offline_status.dart';
-import 'package:nepal_stock/styles/colors.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

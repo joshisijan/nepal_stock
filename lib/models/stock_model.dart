@@ -20,6 +20,7 @@ class StockModel extends ChangeNotifier {
   //market summary
   List<dynamic> _marketSummary = [];
 
+
   // timers
   Timer _marketStatusTimer;
 
@@ -88,6 +89,7 @@ class StockModel extends ChangeNotifier {
           setIndexValue();
           setIndexChart(_id);
           setMarketSummary();
+          // PortfolioModel().setTodayPrice();
         }
         // timer for running when market open
         notifyListeners();
@@ -152,8 +154,12 @@ class StockModel extends ChangeNotifier {
         _marketSummary = jsonData;
         notifyListeners();
       }
-    } catch (e) {}
+    } catch (e) {
+      print('error from set market summary\n' + e.toString());
+    }
   }
+
+
 
   @override
   void dispose() {

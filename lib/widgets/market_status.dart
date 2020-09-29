@@ -135,7 +135,7 @@ class _MarketStatusState extends State<MarketStatus> {
                 color: marketStatus == null
                     ? Theme.of(context).canvasColor
                     : marketStatus['isOpen'] == "CLOSE"
-                        ? Theme.of(context).brightness == Brightness.light ? kColorRed2 : kColorRed1.withAlpha(150)
+                        ? Theme.of(context).brightness == Brightness.light ? kColorRed2.withAlpha(150) : kColorRed1.withAlpha(150)
                         : kColorGreen,
               ),
               child: Text(

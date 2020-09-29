@@ -5,6 +5,7 @@ class ToolsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: PageStorageKey('ToolsScreenStorageKey'),
       child: ListView(
         children: [
           Container(

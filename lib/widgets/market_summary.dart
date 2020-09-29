@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:nepal_stock/models/stock_model.dart';
 import 'package:nepal_stock/reuseables/custom_linear_progress.dart';
 import 'package:nepal_stock/reuseables/wrap_value.dart';
-import 'package:nepal_stock/styles/colors.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable

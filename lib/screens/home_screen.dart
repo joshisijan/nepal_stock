@@ -8,6 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      key: PageStorageKey('HomePageStorageKey'),
       children: [
         Container(
           color: Theme.of(context).canvasColor,

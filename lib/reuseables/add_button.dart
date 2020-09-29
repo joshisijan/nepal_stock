@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nepal_stock/styles/colors.dart';
 
 class AddButton extends StatelessWidget {
   final Alignment alignment;

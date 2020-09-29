@@ -1,9 +1,7 @@
-import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:nepal_stock/models/stock_model.dart';
 import 'package:nepal_stock/reuseables/custom_linear_progress.dart';
 import 'package:nepal_stock/screens/search_delegate_screen.dart';
-import 'package:nepal_stock/styles/colors.dart';
 import 'package:provider/provider.dart';
 
 

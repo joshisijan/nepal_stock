@@ -19,7 +19,7 @@ class SearchDelegateScreen extends SearchDelegate {
   TextEditingController _priceController = TextEditingController();
   FocusNode _numberFocus = FocusNode();
   FocusNode _priceFocus = FocusNode();
-  var formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -78,36 +78,105 @@ class SearchDelegateScreen extends SearchDelegate {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              trailing: IconButton(
+              trailing: typeInt == 0 ? PopupMenuButton(
+                color: Theme.of(context).brightness ==
+                    Brightness.light
+                    ? Theme.of(context).canvasColor
+                    : Theme.of(context).scaffoldBackgroundColor,
+                onSelected: (value) {
+                  if(value == 1){
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SecurityDetailScreen(
+                          id: companies[index]['id'].toString(),
+                          symbol: companies[index]['symbol'].toString(),
+                        )));
+                  }else if (value == 2) {
+                    showPortfolioDialogue(
+                      context: context,
+                      data: companies[index],
+                      numberController: _numberController,
+                      numberFocus: _numberFocus,
+                      priceController: _priceController,
+                      priceFocus: _priceFocus,
+                    );
+                  } else {
+                    showWatchlistDialogue(context, companies[index]);
+                  }
+                },
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: 1,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.short_text,
+                            color: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .color,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text('View Security Detail'),
+                        ],
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 2,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.view_stream,
+                            color: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .color,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text('Add to Portfolio'),
+                        ],
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 3,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.bookmark,
+                            color: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .color,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text('Add to Watchlist'),
+                        ],
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                      ),
+                    ),
+                  ];
+                },
+              ) : IconButton(
                 icon: Icon(
                   Icons.add,
                   color: Theme.of(context).textTheme.caption.color.withAlpha(200),
                 ),
                 onPressed: () {
-                  if (typeInt == 0) {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text('Add to'),
-                            content: Container(
-                              height: 20.0,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ListTile(
-                                    title: Text('Add to Portfolio'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
-                  } else if (typeInt == 1) {
+                  if (typeInt == 1) {
                     showPortfolioDialogue(
                       context: context,
                       data: companies[index],
-                      formKey: formKey,
                       numberController: _numberController,
                       numberFocus: _numberFocus,
                       priceController: _priceController,
@@ -119,7 +188,6 @@ class SearchDelegateScreen extends SearchDelegate {
                 },
               ),
               onTap: () {
-                print(companies[index]['id'].toString());
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => SecurityDetailScreen(
                           id: companies[index]['id'].toString(),
@@ -146,7 +214,7 @@ class SearchDelegateScreen extends SearchDelegate {
     }).toList();
     if (result.length <= 0) {
       return Center(
-        child: Text('Nothing found. Change your search query.'),
+        child: Text('Nothing found. Change your search query.', style: TextStyle(color: Theme.of(context).textTheme.caption.color),),
       );
     }
     return Container(
@@ -174,18 +242,105 @@ class SearchDelegateScreen extends SearchDelegate {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              trailing: IconButton(
+              trailing: typeInt == 0 ? PopupMenuButton(
+                color: Theme.of(context).brightness ==
+                    Brightness.light
+                    ? Theme.of(context).canvasColor
+                    : Theme.of(context).scaffoldBackgroundColor,
+                onSelected: (value) {
+                  if(value == 1){
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SecurityDetailScreen(
+                          id: result[index]['id'].toString(),
+                          symbol: result[index]['symbol'].toString(),
+                        )));
+                  }else if (value == 2) {
+                    showPortfolioDialogue(
+                      context: context,
+                      data: result[index],
+                      numberController: _numberController,
+                      numberFocus: _numberFocus,
+                      priceController: _priceController,
+                      priceFocus: _priceFocus,
+                    );
+                  } else {
+                    showWatchlistDialogue(context, result[index]);
+                  }
+                },
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: 1,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.short_text,
+                            color: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .color,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text('View Security Detail'),
+                        ],
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 2,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.view_stream,
+                            color: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .color,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text('Add to Portfolio'),
+                        ],
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      value: 3,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.bookmark,
+                            color: Theme.of(context)
+                                .textTheme
+                                .subtitle1
+                                .color,
+                          ),
+                          SizedBox(
+                            width: 10.0,
+                          ),
+                          Text('Add to Watchlist'),
+                        ],
+                        crossAxisAlignment:
+                        CrossAxisAlignment.center,
+                      ),
+                    ),
+                  ];
+                },
+              ) : IconButton(
                 icon: Icon(
                   Icons.add,
                   color: Theme.of(context).textTheme.caption.color.withAlpha(200),
                 ),
                 onPressed: () {
-                  if (typeInt == 0) {
-                  } else if (typeInt == 1) {
+                  if (typeInt == 1) {
                     showPortfolioDialogue(
                       context: context,
                       data: result[index],
-                      formKey: formKey,
                       numberController: _numberController,
                       numberFocus: _numberFocus,
                       priceController: _priceController,
@@ -212,13 +367,34 @@ class SearchDelegateScreen extends SearchDelegate {
 
   // add portfolio function
 
-  addPortfolio(PortfolioModel portfolio, BuildContext context, GlobalKey<FormState> key) async {
-    if (key.currentState.validate()) {
+  addPortfolio(PortfolioModel portfolio, BuildContext context) async {
+    if (formKey.currentState.validate()) {
       try {
-        await PortfolioModel().insertPortfolio(portfolio);
-        Navigator.pop(context);
-        CustomFlutterToast().showToast(
-            'Added to your Portfolio', Icons.view_stream, paddingTop, context);
+        FocusScope.of(context).unfocus();
+        DateTime date = await showDatePicker(
+          helpText: "SELECT PURCHASE DATE",
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1990, 12, 26),
+          lastDate: DateTime.now(),
+        );
+        if(date != null){
+          PortfolioModel portfolioModel = PortfolioModel(
+            id: portfolio.id,
+            symbol: portfolio.symbol,
+            name: portfolio.name,
+            price: portfolio.price,
+            quantity: portfolio.quantity,
+            type: 0,
+            date: date.millisecondsSinceEpoch,
+          );
+          Navigator.pop(context);
+          await PortfolioModel().insertPortfolio(portfolioModel);
+          CustomFlutterToast().showToast(
+              'Added to your Portfolio', Icons.view_stream, paddingTop, context);
+        }else{
+          Navigator.pop(context);
+        }
       } catch (e) {
         print('error while adding portfolio\n' + e.toString());
       }
@@ -233,7 +409,6 @@ class SearchDelegateScreen extends SearchDelegate {
     TextEditingController priceController,
     FocusNode numberFocus,
     FocusNode priceFocus,
-    Key formKey,
   }) {
     showDialog(
         context: context,
@@ -244,7 +419,7 @@ class SearchDelegateScreen extends SearchDelegate {
             title: 'Add to Portfolio',
             haveMoreContent: true,
             moreContent: Container(
-              height: 200.0,
+              height: 240.0,
               child: Form(
                 key: formKey,
                 child: ListView(
@@ -265,7 +440,9 @@ class SearchDelegateScreen extends SearchDelegate {
                         color: Theme.of(context).textTheme.subtitle1.color,
                           ),
                     ),
-                    Divider(),
+                    Divider(
+                      color: Theme.of(context).textTheme.subtitle1.color,
+                    ),
                     Text(
                       'Number of Shares',
                       style: Theme.of(context).textTheme.caption.copyWith(
@@ -286,6 +463,21 @@ class SearchDelegateScreen extends SearchDelegate {
                         hintText: '0',
                         hintStyle: TextStyle(
                           color: Theme.of(context).textTheme.subtitle1.color.withAlpha(200),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).textTheme.subtitle1.color.withAlpha(200),
+                          )
+                        ),
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).textTheme.subtitle1.color.withAlpha(200),
+                            )
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).textTheme.subtitle1.color.withAlpha(200),
+                            )
                         ),
                       ),
                       onEditingComplete: () {
@@ -321,16 +513,15 @@ class SearchDelegateScreen extends SearchDelegate {
                             RegExp(r'^\d+\.?\d{0,2}')),
                       ],
                       onEditingComplete: () {
-                        FocusScope.of(context).unfocus();
                         addPortfolio(
                             PortfolioModel(
                               id: data['id'].toString(),
                               name: data['securityName'],
                               symbol: data['symbol'],
-                              quantity: int.parse(numberController.text),
-                              price: double.parse(priceController.text),
+                              quantity: _numberController.text == '' ? 0 : int.parse(_numberController.text.toString()),
+                              price: _priceController.text == '' ? 0 : double.parse(_priceController.text.toString()),
                             ),
-                            context, formKey);
+                          context);
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -342,6 +533,21 @@ class SearchDelegateScreen extends SearchDelegate {
                         hintText: '0.0',
                         hintStyle: TextStyle(
                           color: Theme.of(context).textTheme.subtitle1.color.withAlpha(200),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).textTheme.subtitle1.color.withAlpha(200),
+                            )
+                        ),
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).textTheme.subtitle1.color.withAlpha(200),
+                            )
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).textTheme.subtitle1.color.withAlpha(200),
+                            )
                         ),
                       ),
                     ),
@@ -358,10 +564,10 @@ class SearchDelegateScreen extends SearchDelegate {
                     id: data['id'].toString(),
                     name: data['securityName'],
                     symbol: data['symbol'],
-                    quantity: int.parse(numberController.text),
-                    price: double.parse(priceController.text),
+                    quantity: _numberController.text == '' ? 0 : int.parse(_numberController.text.toString()),
+                    price: _priceController.text == '' ? 0 : double.parse(_priceController.text.toString()),
                   ),
-                  context, formKey);
+                  context);
             },
             onCancel: () {
               numberController.text = '';

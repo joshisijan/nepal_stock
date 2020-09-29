@@ -68,6 +68,7 @@ class AppBase extends StatefulWidget {
 
 class _AppBaseState extends State<AppBase> {
   int _bottomNavigationBarIndex = 0;
+  final PageStorageBucket _bucket = PageStorageBucket();
 
   @override
   void initState() {
@@ -84,31 +85,25 @@ class _AppBaseState extends State<AppBase> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: -MediaQuery.of(context).padding.top,
-            right: 0.0,
-            bottom: 0.0,
-            left: 0.0,
-            child: IndexedStack(
-              index: _bottomNavigationBarIndex,
-              children: [
-                HomeScreen(),
-                SearchScreen(),
-                PortfolioScreen(),
-                WatchlistScreen(),
-                ToolsScreen(),
-              ],
+      body: PageStorage(
+        bucket: _bucket,
+        child: Stack(
+          children: [
+            Positioned(
+              top: -MediaQuery.of(context).padding.top,
+              right: 0.0,
+              bottom: 0.0,
+              left: 0.0,
+              child: showWidget(_bottomNavigationBarIndex),
             ),
-          ),
-          Positioned(
-            bottom: 0.0,
-            left: 0.0,
-            right: 0.0,
-            child: OfflineStatus(),
-          ),
-        ],
+            Positioned(
+              bottom: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: OfflineStatus(),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _bottomNavigationBarIndex,
@@ -141,5 +136,13 @@ class _AppBaseState extends State<AppBase> {
         ],
       ),
     );
+  }
+
+  Widget showWidget(int n) {
+    if(n == 0) return HomeScreen();
+    if(n == 1) return SearchScreen();
+    if(n == 2) return PortfolioScreen();
+    if(n == 3) return WatchlistScreen();
+    else return ToolsScreen();
   }
 }

@@ -18,7 +18,7 @@ class WatchlistModel extends ChangeNotifier {
 
   _createTables(Database db, int newVersion) async {
     await db.execute(
-        'CREATE TABLE portfolio(id INTEGER PRIMARY KEY, security_id VARCHAR(100), security_symbol VARCHAR(100), security_name VARCHAR(100), quantity INTEGER, price REAL)');
+        'CREATE TABLE portfolio(id INTEGER PRIMARY KEY, security_id VARCHAR(100), security_symbol VARCHAR(100), security_name VARCHAR(100), quantity INTEGER, price REAL, type INTEGER, date INTEGER)');
     await db.execute(
         'CREATE TABLE watchlist(id INTEGER PRIMARY KEY, security_id VARCHAR(100), security_symbol VARCHAR(100), security_name VARCHAR(100))');
   }

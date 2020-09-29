@@ -7,6 +7,16 @@ ThemeData kAppLightTheme = ThemeData.light().copyWith(
   primaryColor: kColorBlue,
   cardColor: kColorWhite1,
   canvasColor: kColorBlue,
+  splashColor: kColorBlue,
+  colorScheme: ColorScheme.light().copyWith(
+    primary: kColorBlue,
+  ),
+  buttonTheme: ButtonThemeData(
+    colorScheme: ColorScheme.light().copyWith(
+      primary: kColorBlue,
+    ),
+  ),
+  buttonColor: kColorBlue,
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     type: BottomNavigationBarType.fixed,
     selectedItemColor: kColorWhite1,
@@ -33,6 +43,10 @@ ThemeData kAppDarkTheme = ThemeData.dark().copyWith(
   scaffoldBackgroundColor: kColorBlack2,
   cursorColor: kColorGreen,
   canvasColor: kColorBlack1,
+  colorScheme: ColorScheme.dark().copyWith(
+    primary: kColorGreen,
+    onPrimary: ColorScheme.light().onPrimary,
+  ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: kColorBlack1,
     type: BottomNavigationBarType.fixed,
